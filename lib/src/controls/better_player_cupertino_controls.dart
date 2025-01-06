@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:river_player/src/configuration/better_player_controls_configuration.dart';
 import 'package:river_player/src/controls/better_player_controls_state.dart';
 import 'package:river_player/src/controls/better_player_cupertino_progress_bar.dart';
@@ -753,9 +754,9 @@ class _BetterPlayerCupertinoControlsState
       return _controlsConfiguration.loadingWidget;
     }
 
-    return CircularProgressIndicator(
-      valueColor:
-          AlwaysStoppedAnimation<Color>(_controlsConfiguration.loadingColor),
+    return LoadingAnimationWidget.staggeredDotsWave(
+      color: _controlsConfiguration.loadingColor,
+      size: 50,
     );
   }
 

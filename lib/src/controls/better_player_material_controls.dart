@@ -2,6 +2,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:river_player/src/configuration/better_player_controls_configuration.dart';
 import 'package:river_player/src/controls/better_player_clickable_widget.dart';
 import 'package:river_player/src/controls/better_player_controls_state.dart';
@@ -736,9 +737,9 @@ class _BetterPlayerMaterialControlsState
       );
     }
 
-    return CircularProgressIndicator(
-      valueColor:
-          AlwaysStoppedAnimation<Color>(_controlsConfiguration.loadingColor),
+    return LoadingAnimationWidget.staggeredDotsWave(
+      color: _controlsConfiguration.loadingColor,
+      size: 50,
     );
   }
 }
