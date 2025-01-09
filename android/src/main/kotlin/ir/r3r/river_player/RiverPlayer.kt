@@ -179,7 +179,11 @@ internal class RiverPlayer(
             this.customDefaultLoadControl.bufferForPlaybackAfterRebufferMs
         )
         loadControl = loadBuilder.build()
+        // Abilita il fallback del decoder
+        val renderersFactory = DefaultRenderersFactory(context)
+            .setEnableDecoderFallback(true)
         exoPlayer = ExoPlayer.Builder(context)
+            .setRenderersFactory(renderersFactory)
             .setTrackSelector(trackSelector)
             .setLoadControl(loadControl)
             .build()
