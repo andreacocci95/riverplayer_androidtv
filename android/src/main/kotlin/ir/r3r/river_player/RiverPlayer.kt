@@ -143,6 +143,8 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
+import androidx.media3.exoplayer.DefaultRenderersFactory
+
 internal class RiverPlayer(
     context: Context,
     private val eventChannel: EventChannel,
@@ -178,9 +180,12 @@ internal class RiverPlayer(
             this.customDefaultLoadControl.bufferForPlaybackMs,
             this.customDefaultLoadControl.bufferForPlaybackAfterRebufferMs
         )
+        // Configura il RenderersFactory (opzionale, ma utile per personalizzazioni avanzate)
+        val renderersFactory = DefaultRenderersFactory(context)
+            .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER)
         loadControl = loadBuilder.build()
         exoPlayer = ExoPlayer.Builder(context)
-            .setEnableDecoderFallback(true)
+            .setRenderersFactory(renderersFactory)
             .setTrackSelector(trackSelector)
             .setLoadControl(loadControl)
             .build()
