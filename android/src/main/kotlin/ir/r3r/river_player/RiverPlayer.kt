@@ -136,6 +136,8 @@ import androidx.media3.datasource.DefaultDataSource
 //import com.google.android.exoplayer2.util.Util
 import androidx.media3.common.util.Util
 
+import androidx.media3.common.VideoSize
+
 import java.io.File
 import java.lang.Exception
 import java.lang.IllegalStateException
@@ -525,21 +527,6 @@ internal class RiverPlayer(
         exoPlayer?.setVideoSurface(surface)
         setAudioAttributes(exoPlayer, true)
         exoPlayer?.addListener(object : Player.Listener {
-            override fun onVideoSizeChanged(
-                videoSize: VideoSize
-            ) {
-                val width = videoSize.width
-                val height = videoSize.height
-        
-                // Invia la risoluzione corrente al Dart layer
-                val resolution = mapOf("width" to width, "height" to height)
-                betterPlayerEventSink?.success(mapOf(
-                    "event" to "videoResolutionChanged",
-                    "resolution" to resolution
-                ))
-            }
-        })
-        exoPlayer?.addListener(object : Player.Listener {
             override fun onPlaybackStateChanged(playbackState: Int) {
                 when (playbackState) {
                     Player.STATE_BUFFERING -> {
@@ -574,6 +561,20 @@ internal class RiverPlayer(
 
             override fun onPlayerError(error: PlaybackException) {
                 eventSink.error("VideoError", "Video player had error $error", "")
+            }
+
+            override fun onVideoSizeChanged(
+                videoSize: VideoSize
+            ) {
+                val width = videoSize.width
+                val height = videoSize.height
+        
+                // Invia la risoluzione corrente al Dart layer
+                val resolution = mapOf("width" to width, "height" to height)
+                eventSink?.success(mapOf(
+                    "event" to "videoResolutionChanged",
+                    "resolution" to resolution
+                ))
             }
         })
         val reply: MutableMap<String, Any> = HashMap()
