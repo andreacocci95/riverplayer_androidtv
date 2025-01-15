@@ -568,6 +568,7 @@ internal class RiverPlayer(
             ) {
                 val width = videoSize.width
                 val height = videoSize.height
+                Log.d("RiverPlayer", "Video size changed: ${width}x${height}")
         
                 // Invia la risoluzione corrente al Dart layer
                 val resolution = mapOf("width" to width, "height" to height)
@@ -577,6 +578,7 @@ internal class RiverPlayer(
                 ))
             }
         })
+        Log.d("RiverPlayer", "Listener added to player")
         val reply: MutableMap<String, Any> = HashMap()
         reply["textureId"] = textureEntry.id()
         result.success(reply)
