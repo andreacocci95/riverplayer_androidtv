@@ -21,6 +21,7 @@ class BetterPlayerController {
   static const String _volumeParameter = "volume";
   static const String _speedParameter = "speed";
   static const String _dataSourceParameter = "dataSource";
+  static const String _sizeParameter = "size";
   static const String _authorizationHeader = "Authorization";
 
   ///General configuration used in controller instance.
@@ -1168,6 +1169,17 @@ class BetterPlayerController {
         break;
       case VideoEventType.bufferingEnd:
         _postEvent(BetterPlayerEvent(BetterPlayerEventType.bufferingEnd));
+        break;
+      case VideoEventType.videoResolutionChanged:
+        final VideoPlayerValue? videoValue = videoPlayerController?.value;
+        _postEvent(
+          BetterPlayerEvent(
+            BetterPlayerEventType.videoResolutionChanged,
+            parameters: <String, dynamic>{
+              _sizeParameter: videoValue?.size,
+            },
+          ),
+        );
         break;
       default:
 
