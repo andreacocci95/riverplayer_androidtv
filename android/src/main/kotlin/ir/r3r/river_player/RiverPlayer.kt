@@ -136,6 +136,8 @@ import androidx.media3.datasource.DefaultDataSource
 //import com.google.android.exoplayer2.util.Util
 import androidx.media3.common.util.Util
 
+import androidx.media3.common.VideoSize
+
 import java.io.File
 import java.lang.Exception
 import java.lang.IllegalStateException
@@ -559,6 +561,20 @@ internal class RiverPlayer(
 
             override fun onPlayerError(error: PlaybackException) {
                 eventSink.error("VideoError", "Video player had error $error", "")
+            }
+
+            override fun onVideoSizeChanged(
+                videoSize: VideoSize
+            ) {
+                val width = videoSize.width
+                val height = videoSize.height
+                Log.d("RiverPlayer", "Video size changed: ${width}x${height}")
+        
+                val event: MutableMap<String, Any> = HashMap()
+                event["event"] = "videoResolutionChanged"
+                event["width"] = width
+                event["height"] = height
+                eventSink.success(event)
             }
         })
         val reply: MutableMap<String, Any> = HashMap()
