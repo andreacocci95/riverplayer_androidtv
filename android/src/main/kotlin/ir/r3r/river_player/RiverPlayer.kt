@@ -524,15 +524,14 @@ internal class RiverPlayer(
         surface = Surface(textureEntry.surfaceTexture())
         exoPlayer?.setVideoSurface(surface)
         setAudioAttributes(exoPlayer, true)
-        exoPlayer?.addAnalyticsListener(object : AnalyticsListener {
+        exoPlayer?.addListener(object : Player.Listener {
             override fun onVideoSizeChanged(
-                eventTime: AnalyticsListener.EventTime,
-                width: Int,
-                height: Int,
-                unappliedRotationDegrees: Int,
-                pixelWidthHeightRatio: Float
+                videoSize: VideoSize
             ) {
-                // Invia risoluzione corrente al Dart layer
+                val width = videoSize.width
+                val height = videoSize.height
+        
+                // Invia la risoluzione corrente al Dart layer
                 val resolution = mapOf("width" to width, "height" to height)
                 betterPlayerEventSink?.success(mapOf(
                     "event" to "videoResolutionChanged",
