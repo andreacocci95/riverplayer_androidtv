@@ -43,7 +43,9 @@ class BetterPlayerDashUtils {
 
     final representations = node.findAllElements('Representation');
 
-    representations.forEach((representation) {
+    representations
+        .where((r) => r.getAttribute('frameRate') != "25/50")
+        .forEach((representation) {
       final String? id = representation.getAttribute('id');
       final int width = int.parse(representation.getAttribute('width') ?? '0');
       final int height =
@@ -54,7 +56,8 @@ class BetterPlayerDashUtils {
       final String? frameRateStr = representation.getAttribute('frameRate');
       final arr = frameRateStr?.split('/');
       if (arr?[1].isEmpty == false) {
-        frameRate = int.parse(arr?[0] ?? '1');
+        frameRate =
+            (int.parse(arr?[0] ?? '0') / int.parse(arr?[1] ?? '1')).round();
       } else {
         frameRate = int.parse(frameRateStr ?? '0');
       }
