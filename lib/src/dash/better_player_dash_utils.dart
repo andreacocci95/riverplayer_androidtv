@@ -54,7 +54,7 @@ class BetterPlayerDashUtils {
       final String? frameRateStr = representation.getAttribute('frameRate');
       final arr = frameRateStr?.split('/');
       if (arr?[1].isEmpty == false) {
-        frameRate = int.parse(arr?[1] ?? '0');
+        frameRate = int.parse(arr?[0] ?? '1');
       } else {
         frameRate = int.parse(frameRateStr ?? '0');
       }
