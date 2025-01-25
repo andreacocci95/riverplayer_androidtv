@@ -33,7 +33,7 @@ apply plugin: 'kotlin-android'
 
 android {
     namespace 'ir.r3r.river_player'
-    compileSdk 34
+    compileSdk 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
